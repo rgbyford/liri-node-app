@@ -11,6 +11,7 @@ var spotify = new Spotify({
 });
 
 doStuff(process.argv[2], process.argv[3]);
+
 function doStuff(sWhatToDo, sToWhat) {
     switch (sWhatToDo) {
         case 'spotify-this-song':
@@ -25,12 +26,12 @@ function doStuff(sWhatToDo, sToWhat) {
                 if (err) {
                     return writeStuff('Error occurred: ' + err);
                 }
-//                console.log ('Data: ', data.tracks.items[0]);
-                writeStuff ("By: " + data.tracks.items[0].album.artists[0].name);
+                //                console.log ('Data: ', data.tracks.items[0]);
+                writeStuff("By: " + data.tracks.items[0].album.artists[0].name);
 
-                writeStuff ("Song: " + sToWhat);
-                writeStuff ("Play: " + data.tracks.items[0].external_urls.spotify);
-                writeStuff ("Album: " + data.tracks.items[0].album.name); // album name           writeStuff(data.tracks.items[0].album.artists[0].name);        // gives artist            writeStuff(data.tracks.items[0].album.artists[0].name);        // gives artist
+                writeStuff("Song: " + sToWhat);
+                writeStuff("Play: " + data.tracks.items[0].external_urls.spotify);
+                writeStuff("Album: " + data.tracks.items[0].album.name); // album name           writeStuff(data.tracks.items[0].album.artists[0].name);        // gives artist            writeStuff(data.tracks.items[0].album.artists[0].name);        // gives artist
 
             });
             break;
@@ -41,9 +42,9 @@ function doStuff(sWhatToDo, sToWhat) {
                 json: true
             }, function (err, res, body) {
                 if (!err && res.statusCode === 200) {
-                    writeStuff (body[0].venue.name);
-                    writeStuff (body[0].venue.city + ", " + body[0].venue.country);
-                    writeStuff (moment(body[0].datetime).format('MM/DD/YYYY'));
+                    writeStuff(body[0].venue.name);
+                    writeStuff(body[0].venue.city + ", " + body[0].venue.country);
+                    writeStuff(moment(body[0].datetime).format('MM/DD/YYYY'));
                 }
             });
             break;
@@ -58,6 +59,7 @@ function doStuff(sWhatToDo, sToWhat) {
             request.get(queryURL, {
                 json: true
             }, function (err, res, body) {
+                //                console.log (body);
                 if (!err && res.statusCode === 200) {
                     writeStuff(sToWhat.replace(/\+/g, ' '));
                     //                console.log (body.Released);
@@ -67,17 +69,17 @@ function doStuff(sWhatToDo, sToWhat) {
                     writeStuff('Rating: ' + body.Rated);
                     for (let i = 0; i < body.Ratings.length; i++) {
                         if (body.Ratings[i].Source === 'Rotten Tomatoes') {
-                            writeStuff ('Rotten Tomatoes: ' + body.Ratings[i].Value);
+                            writeStuff('Rotten Tomatoes: ' + body.Ratings[i].Value);
                             break;
                         }
                     }
-                    writeStuff ('Country produced: ' + body.Country);
-                    writeStuff ('Language: ' + body.Language);
-                    writeStuff ('Plot: ' + body.Plot);
-                    writeStuff ('Actors: ' + body.Actors);
+                    writeStuff('Country produced: ' + body.Country);
+                    writeStuff('Language: ' + body.Language);
+                    writeStuff('Plot: ' + body.Plot);
+                    writeStuff('Actors: ' + body.Actors);
                 }
                 if (err) {
-                    writeStuff ("OMDb error: " + err);
+                    writeStuff("OMDb error: " + err);
                 }
             });
             break;
@@ -86,18 +88,18 @@ function doStuff(sWhatToDo, sToWhat) {
             fs.readFile("./random.txt", "utf8", function (error, sText) {
                 let asTexts = sText.split(',');
                 asTexts[1].trim();
-                doStuff (asTexts[0], asTexts[1]);
+                doStuff(asTexts[0], asTexts[1]);
             });
             break;
     }
 }
 
-function writeStuff (sText) {
-    console.log (sText);
-    fs.appendFileSync("./log.txt", sText + '\n', function(err) {
+function writeStuff(sText) {
+    console.log(sText);
+    fs.appendFileSync("./log.txt", sText + '\n', function (err) {
         // have to use Sync to get the lines in order
         if (err) {
-          return writeStuff(err);
+            return writeStuff(err);
         }
-      });      
+    });
 }
