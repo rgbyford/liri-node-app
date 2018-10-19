@@ -10,4 +10,6 @@ movie-this (mt) and a movie name for info about a movie.
 
 do-what-it-says (dw) will take its command from a file named random.txt.
 
+Writes its output to log.txt as well as to the console.
+
 ![example](https://user-images.githubusercontent.com/4602485/47160103-d38d5000-d2b4-11e8-88fb-5cd699baa973.JPG)
